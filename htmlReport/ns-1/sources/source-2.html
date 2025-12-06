@@ -1,0 +1,214 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DayOfWeekFinder</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: DayOfWeekFinder (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DayOfWeekFinder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;/**
+&nbsp; * A utility class to find the day of the week for a given date.
+&nbsp; * This implementation does not use any external date/time libraries.
+&nbsp; */
+<b class="nc">&nbsp;public class DayOfWeekFinder {</b>
+&nbsp;
+&nbsp;    // Array for month day counts (Bug 3: August and December are wrong)
+<b class="nc">&nbsp;    private static final int[] DAYS_IN_MONTH = {31, 28, 31, 30, 31, 30, 31, 30, 31, 30, 31, 30};</b>
+&nbsp;
+<b class="nc">&nbsp;    private static final String[] DAY_NAMES = {</b>
+&nbsp;            &quot;Sunday&quot;, &quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;
+&nbsp;    };
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if a given year is a leap year.
+&nbsp;     * (Bug 1: This logic is incomplete and incorrectly identifies
+&nbsp;     * century years like 1900 as leap years.)
+&nbsp;     *
+&nbsp;     * @param year The year to check.
+&nbsp;     * @return true if it&#39;s considered a leap year, false otherwise.
+&nbsp;     */
+&nbsp;    private static boolean isLeap(int year) {
+<b class="nc">&nbsp;        return year % 4 == 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Calculates the day of the week for a specified date.
+&nbsp;     *
+&nbsp;     * @param year The full year (e.g., 2024).
+&nbsp;     * @param month The month (1-12).
+&nbsp;     * @param day The day (1-31).
+&nbsp;     * @return The name of the day of the week (e.g., &quot;Monday&quot;).
+&nbsp;     */
+&nbsp;    public static int getDayOfWeek(int year, int month, int day) {
+&nbsp;
+<b class="nc">&nbsp;        long totalDays = 0;</b>
+&nbsp;
+&nbsp;        // We use Jan 1, 1900 as our anchor date.
+&nbsp;        // (Bug 2: Jan 1, 1900 was a Monday, not a Sunday.)
+<b class="nc">&nbsp;        int anchorYear = 1900;</b>
+<b class="nc">&nbsp;        int anchorDayOfWeek = 0; // 0 = Sunday</b>
+&nbsp;
+&nbsp;        // 1. Add days for all full years passed since the anchor year
+<b class="nc">&nbsp;        for (int y = anchorYear; y &lt; year; y++) {</b>
+<b class="nc">&nbsp;            totalDays += isLeap(y) ? 366 : 365;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // 2. Add days for all full months passed in the current year
+&nbsp;        // We use month-1 because the input is 1-based
+<b class="nc">&nbsp;        for (int m = 0; m &lt; month - 1; m++) {</b>
+<b class="nc">&nbsp;            totalDays += DAYS_IN_MONTH[m];</b>
+&nbsp;
+&nbsp;            // Add the leap day if it&#39;s February in a leap year
+<b class="nc">&nbsp;            if (m == 1 &amp;&amp; isLeap(year)) {</b>
+<b class="nc">&nbsp;                totalDays++;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        // 3. Add the days of the current month
+&nbsp;        // (We subtract 1 because we are counting days *since* the 1st)
+<b class="nc">&nbsp;        totalDays += (day - 1);</b>
+&nbsp;
+&nbsp;        // 4. Find the final day index
+<b class="nc">&nbsp;        int dayIndex = (int)((anchorDayOfWeek + totalDays) % 7);</b>
+&nbsp;
+<b class="nc">&nbsp;        return dayIndex + 1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Main method to run the program from the command line.
+&nbsp;     */
+&nbsp;    public static void main(String[] args) {
+<b class="nc">&nbsp;        Scanner scanner = new Scanner(System.in);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;Enter Year (e.g., 2024):&quot;);</b>
+<b class="nc">&nbsp;        int year = scanner.nextInt();</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;Enter Month (1-12):&quot;);</b>
+<b class="nc">&nbsp;        int month = scanner.nextInt();</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;Enter Day (1-31):&quot;);</b>
+<b class="nc">&nbsp;        int day = scanner.nextInt();</b>
+&nbsp;
+<b class="nc">&nbsp;        int dayOfWeek = getDayOfWeek(year, month, day);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.printf(&quot;The day of the week for %d-%d-%d is: %s\n&quot;, month, day, year, dayOfWeek);</b>
+&nbsp;
+&nbsp;        // --- Some &quot;Test&quot; Cases ---
+<b class="nc">&nbsp;        System.out.println(&quot;\n--- Sample Outputs ---&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Jan 1, 1900: &quot; + getDayOfWeek(1900, 1, 1));</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Mar 1, 1900: &quot; + getDayOfWeek(1900, 3, 1));</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Dec 25, 2024: &quot; + getDayOfWeek(2024, 12, 25));</b>
+&nbsp;
+&nbsp;        scanner.close();
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-12-06 12:05</div>
+</div>
+</body>
+</html>

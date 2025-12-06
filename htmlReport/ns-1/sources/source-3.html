@@ -1,0 +1,277 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DijkstraGraph</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: DijkstraGraph (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DijkstraGraph</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/44)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DijkstraGraph$Node</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/56)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import java.util.*;
+&nbsp;
+<b class="nc">&nbsp;public class DijkstraGraph {</b>
+&nbsp;
+&nbsp;    // Inner class to represent a Node in the graph
+&nbsp;    public static class Node {
+&nbsp;        private String name;
+<b class="nc">&nbsp;        private LinkedList&lt;Node&gt; shortestPath = new LinkedList&lt;&gt;();</b>
+<b class="nc">&nbsp;        private Integer distance = Integer.MAX_VALUE;</b>
+&nbsp;        
+&nbsp;        // Map of adjacent nodes and the edge weight to get to them
+<b class="nc">&nbsp;        Map&lt;Node, Integer&gt; adjacentNodes = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        public Node(String name) {</b>
+<b class="nc">&nbsp;            this.name = name;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public void addDestination(Node destination, int distance) {
+<b class="nc">&nbsp;            adjacentNodes.put(destination, distance);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public Integer getDistance() {
+<b class="nc">&nbsp;            return distance;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public void setDistance(Integer distance) {
+<b class="nc">&nbsp;            this.distance = distance;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public LinkedList&lt;Node&gt; getShortestPath() {
+<b class="nc">&nbsp;            return shortestPath;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public void setShortestPath(LinkedList&lt;Node&gt; shortestPath) {
+<b class="nc">&nbsp;            this.shortestPath = shortestPath;</b>
+&nbsp;        }
+&nbsp;        
+&nbsp;        public Map&lt;Node, Integer&gt; getAdjacentNodes() {
+<b class="nc">&nbsp;            return adjacentNodes;</b>
+&nbsp;        }
+&nbsp;        
+&nbsp;        @Override
+&nbsp;        public String toString() {
+<b class="nc">&nbsp;            return name;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public static DijkstraGraph calculateShortestPathFromSource(DijkstraGraph graph, Node source) {
+<b class="nc">&nbsp;        source.setDistance(0);</b>
+&nbsp;
+<b class="nc">&nbsp;        Set&lt;Node&gt; settledNodes = new HashSet&lt;&gt;();</b>
+&nbsp;        
+&nbsp;        // PriorityQueue to select the node with the shortest distance next
+<b class="nc">&nbsp;        PriorityQueue&lt;Node&gt; unsettledNodes = new PriorityQueue&lt;&gt;(</b>
+<b class="nc">&nbsp;            (n1, n2) -&gt; Integer.compare(n2.getDistance(), n1.getDistance())</b>
+&nbsp;        );
+&nbsp;
+<b class="nc">&nbsp;        unsettledNodes.add(source);</b>
+&nbsp;
+<b class="nc">&nbsp;        while (!unsettledNodes.isEmpty()) {</b>
+<b class="nc">&nbsp;            Node currentNode = unsettledNodes.poll();</b>
+&nbsp;            
+&nbsp;            // If we have already processed this node, skip it
+<b class="nc">&nbsp;            if (settledNodes.contains(currentNode)) {</b>
+&nbsp;                continue;
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            for (Map.Entry&lt;Node, Integer&gt; adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {</b>
+<b class="nc">&nbsp;                Node adjacentNode = adjacencyPair.getKey();</b>
+<b class="nc">&nbsp;                Integer edgeWeight = adjacencyPair.getValue();</b>
+&nbsp;
+<b class="nc">&nbsp;                if (!settledNodes.contains(adjacentNode)) {</b>
+<b class="nc">&nbsp;                    calculateMinimumDistance(adjacentNode, edgeWeight, currentNode);</b>
+<b class="nc">&nbsp;                    unsettledNodes.add(adjacentNode);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            settledNodes.add(currentNode);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return graph;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static void calculateMinimumDistance(Node evaluationNode, Integer edgeWeight, Node sourceNode) {
+<b class="nc">&nbsp;        Integer sourceDistance = sourceNode.getDistance();</b>
+&nbsp;        
+&nbsp;        // Relaxation step: check if we found a shorter path
+<b class="nc">&nbsp;        if (sourceDistance + edgeWeight &gt; evaluationNode.getDistance()) {</b>
+<b class="nc">&nbsp;            evaluationNode.setDistance(sourceDistance + edgeWeight);</b>
+&nbsp;            
+<b class="nc">&nbsp;            LinkedList&lt;Node&gt; shortestPath = new LinkedList&lt;&gt;(sourceNode.getShortestPath());</b>
+<b class="nc">&nbsp;            shortestPath.add(sourceNode);</b>
+<b class="nc">&nbsp;            evaluationNode.setShortestPath(shortestPath);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // Main method to test the graph
+&nbsp;    public static void main(String[] args) {
+<b class="nc">&nbsp;        Node nodeA = new Node(&quot;A&quot;);</b>
+<b class="nc">&nbsp;        Node nodeB = new Node(&quot;B&quot;);</b>
+<b class="nc">&nbsp;        Node nodeC = new Node(&quot;C&quot;);</b>
+<b class="nc">&nbsp;        Node nodeD = new Node(&quot;D&quot;); </b>
+<b class="nc">&nbsp;        Node nodeE = new Node(&quot;E&quot;);</b>
+<b class="nc">&nbsp;        Node nodeF = new Node(&quot;F&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        nodeA.addDestination(nodeB, 10);</b>
+<b class="nc">&nbsp;        nodeA.addDestination(nodeC, 15);</b>
+&nbsp;
+<b class="nc">&nbsp;        nodeB.addDestination(nodeD, 12);</b>
+<b class="nc">&nbsp;        nodeB.addDestination(nodeF, 15);</b>
+&nbsp;
+<b class="nc">&nbsp;        nodeC.addDestination(nodeE, 10);</b>
+&nbsp;
+<b class="nc">&nbsp;        nodeD.addDestination(nodeE, 2);</b>
+<b class="nc">&nbsp;        nodeD.addDestination(nodeF, 1);</b>
+&nbsp;
+<b class="nc">&nbsp;        nodeF.addDestination(nodeE, 5);</b>
+&nbsp;
+<b class="nc">&nbsp;        DijkstraGraph graph = new DijkstraGraph();</b>
+<b class="nc">&nbsp;        calculateShortestPathFromSource(graph, nodeA);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;Distance to node E: &quot; + nodeE.getDistance());</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Path to node E: &quot;);</b>
+<b class="nc">&nbsp;        for (Node n : nodeE.getShortestPath()) {</b>
+<b class="nc">&nbsp;            System.out.print(n.name + &quot; -&gt; &quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        System.out.println(nodeE.name);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-12-06 12:05</div>
+</div>
+</body>
+</html>
