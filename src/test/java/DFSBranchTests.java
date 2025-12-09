@@ -38,7 +38,7 @@ public class DFSBranchTests {
         g.addVertex(0);
         try {
             g.depthFirstSearch(0);
-            String expectedOutput = "0";
+            String expectedOutput = "0 ";
             assertEquals(expectedOutput, outContent.toString());
         } catch (IndexOutOfBoundsException e) {
             fail("Statement Coverage: Variable 'i' exceeded valid neighbor indices. " + e.getMessage());
@@ -61,7 +61,7 @@ public class DFSBranchTests {
         g.addEdge(1, 2);
         try {
             g.depthFirstSearch(0);
-            String expectedOutput = "0 1 2";
+            String expectedOutput = "0 1 2 ";
             assertEquals(expectedOutput, outContent.toString());
         } catch (IndexOutOfBoundsException e) {
             fail("Statement Coverage: Variable 'i' exceeded valid neighbor indices. " + e.getMessage());

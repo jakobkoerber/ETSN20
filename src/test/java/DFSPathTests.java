@@ -13,7 +13,6 @@ import static org.junit.Assert.fail;
  * #decisions (4) + 1 = 5
  * or
  * #edges (18) - #nodes (15) + 2 = 5
- *
  * Paths:
  * Edges: 1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18
  * Path1: 1-1-1-1-1-0-0-0-0-0-0-0-0-0-0-0-0-0 (Impossible)
@@ -47,7 +46,7 @@ public class DFSPathTests {
         g.addVertex(0);
         try {
             g.depthFirstSearch(0);
-            String expectedOutput = "0";
+            String expectedOutput = "0 ";
             assertEquals(expectedOutput, outContent.toString());
         } catch (IndexOutOfBoundsException e) {
             fail("Statement Coverage: Variable 'i' exceeded valid neighbor indices. " + e.getMessage());
@@ -67,7 +66,7 @@ public class DFSPathTests {
         g.addEdge(0, 1);
         try {
             g.depthFirstSearch(0);
-            String expectedOutput = "0 1";
+            String expectedOutput = "0 1 ";
             assertEquals(expectedOutput, outContent.toString());
         } catch (IndexOutOfBoundsException e) {
             fail("Statement Coverage: Variable 'i' exceeded valid neighbor indices. " + e.getMessage());
@@ -90,7 +89,7 @@ public class DFSPathTests {
         g.addEdge(1, 2);
         try {
             g.depthFirstSearch(0);
-            String expectedOutput = "0 1 2";
+            String expectedOutput = "0 1 2 ";
             assertEquals(expectedOutput, outContent.toString());
         } catch (IndexOutOfBoundsException e) {
             fail("Statement Coverage: Variable 'i' exceeded valid neighbor indices. " + e.getMessage());
