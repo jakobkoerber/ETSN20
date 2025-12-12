@@ -1,0 +1,162 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ShellSort</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: ShellSort (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShellSort</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    53.3%
+  </span>
+  <span class="absValue">
+    (8/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import java.util.Arrays;
+&nbsp;
+<b class="fc">&nbsp;public class ShellSort {</b>
+&nbsp;
+&nbsp;    // Main function to sort array using ShellSort
+&nbsp;    public void sort(int arr[]) {
+<b class="fc">&nbsp;        int n = arr.length;</b>
+&nbsp;
+&nbsp;        // Start with a big gap, then reduce the gap
+<b class="fc">&nbsp;        for (int gap = n / 2; gap &gt; 0; gap /= 2) {</b>
+&nbsp;            
+&nbsp;            // Do a gapped insertion sort for this gap size.
+&nbsp;            // The first gap elements a[0..gap-1] are already in gapped order
+&nbsp;            // keep adding one more element until the entire array is gap sorted
+<b class="fc">&nbsp;            for (int i = gap; i &lt; n; i += 1) {</b>
+&nbsp;                
+&nbsp;                // add a[i] to the elements that have been gap sorted
+&nbsp;                // save a[i] in temp and make a hole at position i
+<b class="fc">&nbsp;                int temp = arr[i];</b>
+&nbsp;                
+&nbsp;                int j;
+&nbsp;                
+&nbsp;                // shift earlier gap-sorted elements up until the correct location for a[i] is found
+<b class="fc">&nbsp;                for (j = i; j &gt;= gap &amp;&amp; arr[j - gap] &lt; temp; j--) {</b>
+<b class="fc">&nbsp;                    arr[j] = arr[j - gap];</b>
+&nbsp;                }
+&nbsp;                
+&nbsp;                // put temp (the original a[i]) in its correct location
+<b class="fc">&nbsp;                arr[j] = temp;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // Driver method
+&nbsp;    public static void main(String args[]) {
+<b class="nc">&nbsp;        int arr[] = {12, 34, 54, 2, 3};</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Array before sorting:&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(Arrays.toString(arr));</b>
+&nbsp;
+<b class="nc">&nbsp;        ShellSort ob = new ShellSort();</b>
+<b class="nc">&nbsp;        ob.sort(arr);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;Array after sorting:&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(Arrays.toString(arr));</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-12-06 12:05</div>
+</div>
+</body>
+</html>
