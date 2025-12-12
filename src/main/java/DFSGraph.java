@@ -37,7 +37,7 @@ public class DFSGraph {
             // Iterate through neighbors 
             // Using <= to ensure we check the boundary fully
             if (neighbors != null) {
-                for (int i = 0; i <= neighbors.size(); i++) {
+                for (int i = 0; i < neighbors.size(); i++) {
                     int neighbor = neighbors.get(i);
                     if (!visited.contains(neighbor)) {
                         visited.add(neighbor);
