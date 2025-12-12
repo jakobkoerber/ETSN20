@@ -11,9 +11,7 @@ public class ShellSortStatementTests {
      * * This input ensures:
      * 1. gap > 0 is True (Outer loop entered)
      * 2. i < n is True (Middle loop entered)
-     * 3. The logic inside the inner loop is exercised. 
-     * (Note: Since the buggy code sorts descending, providing an Ascending
-     * input like {2, 3...} usually forces the swap body to execute).
+     * 3. The logic inside the inner loop is exercised.
      */
     @Test
     public void testStandardSort() {
